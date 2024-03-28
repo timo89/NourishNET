@@ -213,3 +213,4 @@ C:\Users\timo\source\repos\NourishNetAPI\NourishNetAPI\obj\Debug\net8.0\NourishN
 C:\Users\timo\source\repos\NourishNetAPI\NourishNetAPI\obj\Debug\net8.0\NourishNetAPI.genruntimeconfig.cache
 C:\Users\timo\source\repos\NourishNetAPI\NourishNetAPI\obj\Debug\net8.0\ref\NourishNetAPI.dll
 C:\Users\timo\source\repos\NourishNetAPI\NourishNetAPI\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\timo\source\repos\NourishNetAPI\NourishNetAPI\obj\Debug\net8.0\NourishNetAPI.sourcelink.json

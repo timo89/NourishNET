@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NourishNetAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4794a00e349b05dc20f4d65e33084d662783445")]
 [assembly: System.Reflection.AssemblyProductAttribute("NourishNetAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NourishNetAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

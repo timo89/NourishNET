@@ -18,6 +18,7 @@ public class NourishNetDbContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderStatus> OrderStatuses { get; set; }
     public DbSet<City> Cities { get; set; }
+    public DbSet<Product> Products { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -40,7 +41,6 @@ public class NourishNetDbContext : DbContext
             new Courier { Id = 3, Name = "GLS", Price = 17.5M }
         );
 
-        /*
         modelBuilder.Entity<DonationStatus>().HasData(
             new DonationStatus { Id = 1, Name = "Pending" },
             new DonationStatus { Id = 2, Name = "Approved" },
@@ -51,12 +51,24 @@ public class NourishNetDbContext : DbContext
             new OrderStatus { Id = 1, Name = "Unconfirmed" },
             new OrderStatus { Id = 2, Name = "Confirmed" },
             new OrderStatus { Id = 3, Name = "InDelivery" },
-            new OrderStatus { Id = 3, Name = "Delivered" }
-        );*/
+            new OrderStatus { Id = 4, Name = "Delivered" }
+        );
+
+        modelBuilder.Entity<Product>().HasData(
+            new Product { Id = 1, Name = "branza" },
+            new Product { Id = 2, Name = "oua" },
+            new Product { Id = 3, Name = "sunca" }
+        );
 
         modelBuilder.Entity<Courier>()
             .Property(c => c.Price)
             .HasColumnType("decimal(18, 2)");
+
+        modelBuilder.Entity<Order>()
+            .HasOne(o => o.Donation)
+            .WithMany()
+            .HasForeignKey(o => o.DonationId)
+            .OnDelete(DeleteBehavior.Restrict); // Specify ON DE
 
         base.OnModelCreating(modelBuilder);
     }

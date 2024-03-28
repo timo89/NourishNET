@@ -28,3 +28,4 @@ C:\Users\timo\source\repos\NourishNetAPI\NourishNet.Repository\obj\Debug\net8.0\
 C:\Users\timo\source\repos\NourishNetAPI\NourishNet.Repository\obj\Debug\net8.0\refint\NourishNet.Repository.dll
 C:\Users\timo\source\repos\NourishNetAPI\NourishNet.Repository\obj\Debug\net8.0\NourishNet.Repository.pdb
 C:\Users\timo\source\repos\NourishNetAPI\NourishNet.Repository\obj\Debug\net8.0\ref\NourishNet.Repository.dll
+C:\Users\timo\source\repos\NourishNetAPI\NourishNet.Repository\obj\Debug\net8.0\NourishNet.Repository.sourcelink.json

@@ -78,7 +78,7 @@ public class OrderController : ControllerBase
                 BeneficiaryId = o.BeneficiaryId,
                 BeneficiaryName = o.Beneficiary.Name,
                 DonationId = o.DonationId,
-                DonationProduct = o.Donation.Product,
+                DonationProduct = o.Donation.Product.Name,
                 CourierId = o.CourierId,
                 CourierName = o.Courier.Name,
                 CreationDate = o.CreationDate,

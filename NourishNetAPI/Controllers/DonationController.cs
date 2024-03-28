@@ -7,7 +7,7 @@ using NourishNetAPI.DTO.Donation;
 namespace NourishNetAPI.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/[action]")]
 public class DonationController : ControllerBase
 {
     private readonly NourishNetDbContext _context;
@@ -34,7 +34,7 @@ public class DonationController : ControllerBase
         var donation = new Donation
         {
             DonorId = donationDTO.DonorId,
-            Product = donationDTO.Product,
+            ProductId  = donationDTO.ProductId,
             Quantity = donationDTO.Quantity,
             ExpirationDate = donationDTO.ExpirationDate,
             StatusId = donationDTO.StatusId
@@ -51,12 +51,13 @@ public class DonationController : ControllerBase
     {
         var donation = await _context.Donations
             .Include(d => d.Status)
+            .Include(d => d.Product)
             .Where(d => d.Id == id)
             .Select(d=> new DonationDetailDTO
             {
                 Id = d.Id,
                 DonorId = d.DonorId,
-                Product = d.Product,
+                Product = d.Product.Name,
                 Quantity = d.Quantity,
                 ExpirationDate = d.ExpirationDate,
                 StatusId = d.StatusId,
@@ -70,5 +71,27 @@ public class DonationController : ControllerBase
         return donation;
     }
 
+    [HttpGet("{cityId}")]
+    public async Task<ActionResult<IList<DonationDetailDTO>>> GetDonationsByCityId(int cityId)
+    {
+        var donations = await _context.Donations
+            .Include(d => d.Status)
+            .Include(d => d.Donor)
+            .Include(d => d.Product)
+            .Where(d => d.Donor.CityId == cityId)
+
+            .Select(d => new DonationDetailDTO
+            {
+                Id = d.Id,
+                DonorId = d.DonorId,
+                Product = d.Product.Name,
+                Quantity = d.Quantity,
+                ExpirationDate = d.ExpirationDate,
+                StatusId = d.StatusId,
+                Status = d.Status.Name
+            })
+            .ToListAsync();
+        return donations;
+    }
 
 }

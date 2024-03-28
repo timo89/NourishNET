@@ -20,3 +20,4 @@ C:\Users\timo\source\repos\NourishNetAPI\NourishNet.Domain\obj\Debug\net8.0\Nour
 C:\Users\timo\source\repos\NourishNetAPI\NourishNet.Domain\obj\Debug\net8.0\refint\NourishNet.Domain.dll
 C:\Users\timo\source\repos\NourishNetAPI\NourishNet.Domain\obj\Debug\net8.0\NourishNet.Domain.pdb
 C:\Users\timo\source\repos\NourishNetAPI\NourishNet.Domain\obj\Debug\net8.0\ref\NourishNet.Domain.dll
+C:\Users\timo\source\repos\NourishNetAPI\NourishNet.Domain\obj\Debug\net8.0\NourishNet.Domain.sourcelink.json

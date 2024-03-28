@@ -50,7 +50,7 @@ public class DonorController : ControllerBase
                 Donations = d.Donations.Select(donation => new DonationDTO
                 {
                     Id = donation.Id,
-                    Product = donation.Product,
+                    Product = donation.Product.Name,
                     Quantity = donation.Quantity,
                     ExpirationDate = donation.ExpirationDate,
                     Status = donation.Status.Name

@@ -170,8 +170,8 @@ namespace NourishNet.Repository.Migrations
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Product")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -182,6 +182,10 @@ namespace NourishNet.Repository.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DonorId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Donations");
                 });
@@ -238,6 +242,8 @@ namespace NourishNet.Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
                     b.ToTable("Donors");
                 });
 
@@ -264,10 +270,7 @@ namespace NourishNet.Repository.Migrations
                     b.Property<int>("DonationId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StatusOrderId")
+                    b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -302,17 +305,55 @@ namespace NourishNet.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Pending"
+                            Name = "Unconfirmed"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Approved"
+                            Name = "Confirmed"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Rejected"
+                            Name = "InDelivery"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Delivered"
+                        });
+                });
+
+            modelBuilder.Entity("NourishNet.Domain.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "branza"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "oua"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "sunca"
                         });
                 });
 
@@ -329,11 +370,40 @@ namespace NourishNet.Repository.Migrations
 
             modelBuilder.Entity("NourishNet.Domain.Entities.Donation", b =>
                 {
-                    b.HasOne("NourishNet.Domain.Entities.Donor", null)
+                    b.HasOne("NourishNet.Domain.Entities.Donor", "Donor")
                         .WithMany("Donations")
                         .HasForeignKey("DonorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("NourishNet.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NourishNet.Domain.Entities.DonationStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Donor");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("NourishNet.Domain.Entities.Donor", b =>
+                {
+                    b.HasOne("NourishNet.Domain.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("NourishNet.Domain.Entities.Order", b =>
@@ -353,12 +423,14 @@ namespace NourishNet.Repository.Migrations
                     b.HasOne("NourishNet.Domain.Entities.Donation", "Donation")
                         .WithMany()
                         .HasForeignKey("DonationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("NourishNet.Domain.Entities.OrderStatus", "OrderStatus")
                         .WithMany()
-                        .HasForeignKey("OrderStatusId");
+                        .HasForeignKey("OrderStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Beneficiary");
 
