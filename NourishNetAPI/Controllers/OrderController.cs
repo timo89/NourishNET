@@ -21,14 +21,16 @@ public class OrderController : ControllerBase
     {
         var order = new Order
         {
+            Quantity = createOrderDTO.Quantity,
             BeneficiaryId = createOrderDTO.BeneficiaryId,
             DonationId = createOrderDTO.DonationId,
             CourierId = createOrderDTO.CourierId,
             CreationDate = createOrderDTO.CreationDate,
-            OrderStatusId = createOrderDTO.OrderStatusId,
+            OrderStatusId = createOrderDTO.OrderStatusId
+            
         };
 
-        var createdOrder = await _orderService.CreateOrderAsync(order, createOrderDTO.Quantity);
+        var createdOrder = await _orderService.CreateOrderAsync(order);
 
         var orderDetails = new OrderDetailsDTO
         {
@@ -39,6 +41,7 @@ public class OrderController : ControllerBase
             CreationDate = createdOrder.CreationDate,
             DeliveryDate = createdOrder.DeliveryDate,
             OrderStatusId = createdOrder.OrderStatusId,
+            Quantity = createdOrder.Quantity,
         };
 
         return Ok(orderDetails);

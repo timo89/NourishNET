@@ -12,15 +12,15 @@ using NourishNet.Repository.Data;
 namespace NourishNet.Repository.Migrations
 {
     [DbContext(typeof(FoodSharingDbContext))]
-    [Migration("20240328134608_InitDB")]
-    partial class InitDB
+    [Migration("20240422195725_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -274,6 +274,9 @@ namespace NourishNet.Repository.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("OrderStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

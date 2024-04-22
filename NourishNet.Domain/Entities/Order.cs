@@ -13,4 +13,5 @@ public class Order
     public DateTime? DeliveryDate { get; set; } // Nullable in case the delivery date is not yet set
     public int OrderStatusId { get; set; }
     public OrderStatus OrderStatus { get; set; }
+    public int Quantity { get; set; }
 }

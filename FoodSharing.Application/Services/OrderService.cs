@@ -15,7 +15,7 @@ public class OrderService : IOrderService
         _context = dbContext;
     }
 
-    public async Task<Order> CreateOrderAsync(Order order, int quantity)
+    public async Task<Order> CreateOrderAsync(Order order)
     {
         var donation = await _context.Donations
             .FirstOrDefaultAsync(d => d.Id == order.DonationId);
@@ -27,12 +27,12 @@ public class OrderService : IOrderService
         }
 
         // Check if the requested quantity is available
-        if (donation.Quantity < quantity)
+        if (donation.Quantity < order.Quantity)
         {
             throw new OrderException($"Requested quantity exceeds available quantity for Donation ID {order.DonationId}.");
         }
 
-        donation.Quantity -= quantity;
+        donation.Quantity -= order.Quantity;
 
         _context.Orders.Add(order);
         await _context.SaveChangesAsync();
