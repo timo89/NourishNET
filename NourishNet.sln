@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NourishNetAPI", "NourishNet
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NourishNet.Domain", "NourishNet.Domain\NourishNet.Domain.csproj", "{A3E29862-B17B-4032-AB13-F5BA6F829B92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NourishNet.Repository", "NourishNet.Repository\NourishNet.Repository.csproj", "{80B5A79A-6D7F-417E-8547-418462C83450}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NourishNet.Repository", "NourishNet.Repository\NourishNet.Repository.csproj", "{80B5A79A-6D7F-417E-8547-418462C83450}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodSharing.Application", "FoodSharing.Application\FoodSharing.Application.csproj", "{0B824D87-D493-45EC-A654-E4F27642BC79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{80B5A79A-6D7F-417E-8547-418462C83450}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80B5A79A-6D7F-417E-8547-418462C83450}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80B5A79A-6D7F-417E-8547-418462C83450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B824D87-D493-45EC-A654-E4F27642BC79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B824D87-D493-45EC-A654-E4F27642BC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B824D87-D493-45EC-A654-E4F27642BC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B824D87-D493-45EC-A654-E4F27642BC79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,7 +10,7 @@ using NourishNet.Repository.Data;
 
 namespace NourishNet.Repository.Migrations
 {
-    [DbContext(typeof(NourishNetDbContext))]
+    [DbContext(typeof(FoodSharingDbContext))]
     partial class NourishNetDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

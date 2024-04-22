@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using FoodSharing.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using NourishNet.Domain.Entities;
-using NourishNet.Repository.Data;
 using NourishNetAPI.DTO.Order;
 using OrderStatusEnum = NourishNet.Domain.Enums.OrderStatus;
 
@@ -9,34 +8,17 @@ using OrderStatusEnum = NourishNet.Domain.Enums.OrderStatus;
 [ApiController]
 public class OrderController : ControllerBase
 {
-    private readonly NourishNetDbContext _context;
+    private readonly IOrderService _orderService;
 
-    public OrderController(NourishNetDbContext context)
+    public OrderController(IOrderService orderService)
     {
-        _context = context;
+        _orderService = orderService;
     }
 
     // POST: api/Order
     [HttpPost]
     public async Task<ActionResult<OrderDTO>> CreateOrder([FromBody] CreateOrderDTO createOrderDTO)
     {
-        var donation = await _context.Donations
-            .FirstOrDefaultAsync(d => d.Id == createOrderDTO.DonationId);
-
-        // Check if the donation exists
-        if (donation == null)
-        {
-            return NotFound($"Donation with ID {createOrderDTO.DonationId} not found.");
-        }
-
-        // Check if the requested quantity is available
-        if (donation.Quantity < createOrderDTO.Quantity)
-        {
-            return BadRequest($"Requested quantity exceeds available quantity for Donation ID {createOrderDTO.DonationId}.");
-        }
-
-        donation.Quantity -= createOrderDTO.Quantity;
-
         var order = new Order
         {
             BeneficiaryId = createOrderDTO.BeneficiaryId,
@@ -46,18 +28,17 @@ public class OrderController : ControllerBase
             OrderStatusId = createOrderDTO.OrderStatusId,
         };
 
-        _context.Orders.Add(order);
-        await _context.SaveChangesAsync();
+        var createdOrder = await _orderService.CreateOrderAsync(order, createOrderDTO.Quantity);
 
         var orderDetails = new OrderDetailsDTO
         {
-            Id = order.Id,
-            BeneficiaryId = order.BeneficiaryId,
-            DonationId = order.DonationId,
-            CourierId = order.CourierId,
-            CreationDate = order.CreationDate,
-            DeliveryDate = order.DeliveryDate,
-            OrderStatusId = order.OrderStatusId,
+            Id = createdOrder.Id,
+            BeneficiaryId = createdOrder.BeneficiaryId,
+            DonationId = createdOrder.DonationId,
+            CourierId = createdOrder.CourierId,
+            CreationDate = createdOrder.CreationDate,
+            DeliveryDate = createdOrder.DeliveryDate,
+            OrderStatusId = createdOrder.OrderStatusId,
         };
 
         return Ok(orderDetails);
@@ -67,33 +48,24 @@ public class OrderController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<OrderDTO>> GetOrder(int id)
     {
-        var order = await _context.Orders
-            .Include(o=>o.Beneficiary)
-            .Include(o => o.Donation)
-            .Include(o => o.OrderStatus)
-            .Where(o => o.Id == id)
-            .Select(o => new OrderDTO
-            {
-                Id = o.Id,
-                BeneficiaryId = o.BeneficiaryId,
-                BeneficiaryName = o.Beneficiary.Name,
-                DonationId = o.DonationId,
-                DonationProduct = o.Donation.Product.Name,
-                CourierId = o.CourierId,
-                CourierName = o.Courier.Name,
-                CreationDate = o.CreationDate,
-                DeliveryDate = o.DeliveryDate,
-                OrderStatusId = o.OrderStatusId,
-                OrderStatusName = o.OrderStatus.Name
-            })
-            .FirstOrDefaultAsync();
+        var order = await _orderService.GetOrderAsync(id);
 
-        if (order == null)
+        var orderDto = new OrderDTO
         {
-            return NotFound();
-        }
+            Id = order.Id,
+            BeneficiaryId = order.BeneficiaryId,
+            BeneficiaryName = order.Beneficiary.Name,
+            DonationId = order.DonationId,
+            DonationProduct = order.Donation.Product.Name,
+            CourierId = order.CourierId,
+            CourierName = order.Courier.Name,
+            CreationDate = order.CreationDate,
+            DeliveryDate = order.DeliveryDate,
+            OrderStatusId = order.OrderStatusId,
+            OrderStatusName = order.OrderStatus.Name
+        };
 
-        return Ok(order);
+        return Ok(orderDto);
     }
 
     [HttpPatch("{orderId:int}/status")] 
@@ -104,21 +76,7 @@ public class OrderController : ControllerBase
             return BadRequest("Mismatched Order ID");
         }
 
-        var order = await _context.Orders.FindAsync(orderId);
-        if (order == null)
-        {
-            return NotFound($"Order with ID {orderId} not found.");
-        }
-
-        if (!_context.OrderStatuses.Any(s => s.Id == updateStatusDTO.NewStatusId))
-        {
-            return NotFound($"Status with ID {updateStatusDTO.NewStatusId} not found.");
-        }
-
-        order.OrderStatusId = updateStatusDTO.NewStatusId;
-        order.DeliveryDate = updateStatusDTO.NewStatusId ==  (int)OrderStatusEnum.Delivered ? DateTime.UtcNow : order.DeliveryDate; 
-
-        await _context.SaveChangesAsync();
+        await _orderService.UpdateOrderStatusAsync(orderId, (OrderStatusEnum)updateStatusDTO.NewStatusId);
 
         return NoContent(); 
     }

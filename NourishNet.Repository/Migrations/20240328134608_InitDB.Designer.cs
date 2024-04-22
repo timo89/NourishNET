@@ -11,7 +11,7 @@ using NourishNet.Repository.Data;
 
 namespace NourishNet.Repository.Migrations
 {
-    [DbContext(typeof(NourishNetDbContext))]
+    [DbContext(typeof(FoodSharingDbContext))]
     [Migration("20240328134608_InitDB")]
     partial class InitDB
     {

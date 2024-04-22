@@ -9,9 +9,9 @@ using NourishNetAPI.DTO.Product;
 [ApiController]
 public class ProductController : ControllerBase
 {
-    private readonly NourishNetDbContext _context;
+    private readonly FoodSharingDbContext _context;
 
-    public ProductController(NourishNetDbContext context)
+    public ProductController(FoodSharingDbContext context)
     {
         _context = context;
     }

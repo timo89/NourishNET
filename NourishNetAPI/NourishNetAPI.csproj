@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FoodSharing.Application\FoodSharing.Application.csproj" />
     <ProjectReference Include="..\NourishNet.Repository\NourishNet.Repository.csproj" />
   </ItemGroup>
 

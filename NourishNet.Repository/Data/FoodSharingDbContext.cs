@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FoodSharing.Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using NourishNet.Domain.Entities;
 
 namespace NourishNet.Repository.Data;
 
-public class NourishNetDbContext : DbContext
+public class FoodSharingDbContext : DbContext, IFoodSharingDbContext
 {
-    public NourishNetDbContext(DbContextOptions<NourishNetDbContext> options)
+    public FoodSharingDbContext(DbContextOptions<FoodSharingDbContext> options)
         : base(options)
     {
     }

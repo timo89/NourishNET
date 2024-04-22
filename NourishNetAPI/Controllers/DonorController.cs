@@ -11,9 +11,9 @@ namespace NourishNetAPI.Controllers;
 [Route("api/[controller]/[action]")]
 public class DonorController : ControllerBase
 {
-    private readonly NourishNetDbContext _context;
+    private readonly FoodSharingDbContext _context;
 
-    public DonorController(NourishNetDbContext context)
+    public DonorController(FoodSharingDbContext context)
     {
         _context = context;
     }

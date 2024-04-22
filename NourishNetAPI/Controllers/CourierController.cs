@@ -10,9 +10,9 @@ using OrderStatusEnum = NourishNet.Domain.Enums.OrderStatus;
 [ApiController]
 public class CourierController : ControllerBase
 {
-    private readonly NourishNetDbContext _context;
+    private readonly FoodSharingDbContext _context;
 
-    public CourierController(NourishNetDbContext context)
+    public CourierController(FoodSharingDbContext context)
     {
         _context = context;
     }
